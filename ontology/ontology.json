@@ -1,0 +1,48 @@
+{
+  "version": "0.1",
+  "namespace": "ircbr",
+  "description": "Ontología mínima para PdM y casos extraídos de papers.",
+  "classes": [
+    {"name": "MaintainableItem", "description": "Activo mantenible (motor, bomba, compresor)"},
+    {"name": "FailureMode", "description": "Modo de falla (bearing wear, cavitation)"},
+    {"name": "PdMFunction", "description": "Función PdM (detección, diagnóstico, RUL, scheduling)"},
+    {"name": "Sensor", "description": "Tipo de sensor (vibration, current, temperature, acoustic, oil)"},
+    {"name": "DataSpec", "description": "Especificación de datos (sampling_rate, features)"},
+    {"name": "Method", "description": "Modelo/método (RF, XGB, SVM, LSTM, CNN, Transformer, PhysicsInformed)"},
+    {"name": "Evaluation", "description": "Métricas/validación (F1, AUC, MAE, RMSE, RUL error)"},
+    {"name": "Outcome", "description": "Beneficios/resultados (downtime↓, MTBF↑, ROI)"},
+    {"name": "Dataset", "description": "Dataset (C-MAPSS, MIMII, IMS Bearing, propietario)"},
+    {"name": "Paper", "description": "Publicación (título, autores, venue, año, DOI)"},
+    {"name": "Case", "description": "Instancia normalizada problema→solución→evidencia"}
+  ],
+  "object_properties": [
+    {"name": "usesMethod", "domain": "Case", "range": "Method"},
+    {"name": "targetsFunction", "domain": "Case", "range": "PdMFunction"},
+    {"name": "concernsItem", "domain": "Case", "range": "MaintainableItem"},
+    {"name": "addressesFailureMode", "domain": "Case", "range": "FailureMode"},
+    {"name": "usesSensor", "domain": "Case", "range": "Sensor"},
+    {"name": "usesDataset", "domain": "Case", "range": "Dataset"},
+    {"name": "reportedIn", "domain": "Case", "range": "Paper"},
+    {"name": "hasEvaluation", "domain": "Case", "range": "Evaluation"},
+    {"name": "yieldsOutcome", "domain": "Case", "range": "Outcome"},
+    {"name": "hasDataSpec", "domain": "Case", "range": "DataSpec"}
+  ],
+  "data_properties": [
+    {"name": "year", "domain": "Paper", "range": "integer"},
+    {"name": "title", "domain": "Paper", "range": "string"},
+    {"name": "venue", "domain": "Paper", "range": "string"},
+    {"name": "doi", "domain": "Paper", "range": "string"},
+    {"name": "authors", "domain": "Paper", "range": "string[]"},
+    {"name": "samplingRateHz", "domain": "DataSpec", "range": "number"},
+    {"name": "featureSpace", "domain": "DataSpec", "range": "string"},
+    {"name": "metricName", "domain": "Evaluation", "range": "string"},
+    {"name": "metricValue", "domain": "Evaluation", "range": "number"},
+    {"name": "outcomeNote", "domain": "Outcome", "range": "string"}
+  ],
+  "controlled_vocabularies": {
+    "PdMFunction": ["fault_detection", "fault_identification", "degradation_assessment", "RUL_prognosis", "maintenance_scheduling"],
+    "Sensor": ["vibration", "current", "voltage", "temperature", "pressure", "acoustic", "oil_analysis", "images"],
+    "Method": ["RF", "XGB", "SVM", "KNN", "LSTM", "CNN", "Transformer", "Autoencoder", "PhysicsInformed", "Hybrid"],
+    "FeatureSpace": ["time", "frequency", "time_frequency", "statistical", "learned_embedding"]
+  }
+}
