@@ -12,3 +12,4 @@
 │  └─ processed/           # Casos JSON derivados de papers (luego)
 ├─ src/
 │  └─ validate_case.py     # Validar un case.json contra el schema
+
