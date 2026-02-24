@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Case",
+  "type": "object",
+  "required": ["id", "year", "title", "case_problem", "case_solution", "reported_in"],
+  "properties": {
+    "id": {"type": "string", "description": "Unique identifier (doi|hash)"},
+    "year": {"type": "integer"},
+    "title": {"type": "string"},
+    "venue": {"type": "string"},
+    "doi": {"type": "string"},
+    "authors": {"type": "array", "items": {"type": "string"}},
+    "case_problem": {
+      "type": "object",
+      "required": ["domain", "asset", "pdm_function"],
+      "properties": {
+        "domain": {"type": "string"},
+        "asset": {"type": "string"},
+        "failure_mode": {"type": "string"},
+        "pdm_function": {
+          "type": "string",
+          "enum": ["fault_detection","fault_identification","degradation_assessment","RUL_prognosis","maintenance_scheduling"]
+        },
+        "constraints": {"type": "object", "additionalProperties": true},
+        "assumptions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "data_inputs": {
+      "type": "object",
+      "properties": {
+        "sensors": {"type": "array", "items": {"type": "string"}},
+        "sampling_hz": {"type": "number"},
+        "features": {"type": "string"},
+        "dataset": {"type": "string"}
+      }
+    },
+    "case_solution": {
+      "type": "object",
+      "required": ["method"],
+      "properties": {
+        "approach": {"type": "string", "description": "ML/DL/Hybrid/PhysicsInformed"},
+        "method": {"type": "string", "description": "e.g., RF, LSTM, CNN"},
+        "configuration": {"type": "object", "additionalProperties": true},
+        "explainability": {"type": "string"}
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "properties": {
+        "metrics": {"type": "object", "additionalProperties": {"type": "number"}},
+        "validation": {"type": "string"},
+        "baselines": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "outcomes": {
+      "type": "object",
+      "properties": {
+        "downtime_reduction_pct": {"type": "number"},
+        "notes": {"type": "string"}
+      }
+    },
+    "reported_in": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {"type": "string", "const": "paper"},
+        "source_path": {"type": "string"},
+        "open_access": {"type": "boolean"}
+      }
+    },
+    "embedding_vector": {
+      "type": "array",
+      "items": {"type": "number"},
+      "description": "Optional: document embedding"
+    }
+  },
+  "additionalProperties": false
+}
